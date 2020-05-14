@@ -11,7 +11,8 @@ app = Flask(__name__)
 
 cors = CORS(app)
 
-basePath = Path(__file__).resolve().parent.parent.joinpath('ttndata','media','acp')
+#basePath = Path(__file__).resolve().parent.parent.joinpath('ttndata','media','acp')
+basePath = Path('/').resolve().joinpath('media','acp')
 DEBUG = True
 
 def date_to_path(selecteddate):
