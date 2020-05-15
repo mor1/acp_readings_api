@@ -19,10 +19,35 @@ def date_to_path(selecteddate):
     data = selecteddate.split('-')
     return(data[0]+'/'+data[1]+'/'+data[2]+'/')
 
+def date_to_sensorpath(selecteddate):
+    data = selecteddate.split('-')
+    return(data[0]+'/'+data[1]+'/')
+
 def getDateToday():
     dt = datetime.now()
     return dt.strftime("%Y-%m-%d")
     
+@app.route('/api/latestdata')
+def latest_data():
+    source = request.args.get('source')
+    sensor = request.args.get('sensor')
+    feature = request.args.get('feature')
+
+    selecteddate = getDateToday()
+    fname = Path(basePath).resolve().joinpath(source,'sensors',sensor,date_to_sensorpath(selecteddate),sensor+'_'+selecteddate+'.txt')
+
+    latestData = open(fname).readlines()[-1]
+    jsonData = json.loads(latestData)
+
+    response = {}
+
+    if feature == '':
+        response = {'features':jsonData['payload_fields']}
+    else:
+        response = {feature:jsonData['payload_fields'][feature]}
+
+    json_response = json.dumps(response)
+    return(json_response)
 
 @app.route('/api/historicaldata')
 def history_data():
@@ -40,13 +65,11 @@ def history_data():
         sensor = request.args.get('sensor')
         feature = request.args.get('feature')
         workingDir = Path(basePath).resolve().joinpath(source,'data_bin',date_to_path(selecteddate))
-        # workingDir = basePath+source+'/data_bin/'+date_to_path(selecteddate)
         if not path.exists(workingDir):
             sensor = "ijl20-sodaq-ttn"
             feature = "temperature"
             selecteddate = getDateToday()
             workingDir = Path(basePath).resolve().joinpath('mqtt_ttn','data_bin',date_to_path(selecteddate))
-            # workingDir = basePath+'mqtt_ttn/data_bin/'+date_to_path(selecteddate)
     except:
         if DEBUG:
             print(sys.exc_info())
@@ -55,7 +78,6 @@ def history_data():
         feature = "temperature"
         selecteddate = getDateToday()
         workingDir = Path(basePath).resolve().joinpath('mqtt_ttn','data_bin',date_to_path(selecteddate))
-        # workingDir = basePath+'mqtt_ttn/data_bin/'+date_to_path(selecteddate)
     response = {}
     response['data'] = []
 

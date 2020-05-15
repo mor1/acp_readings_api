@@ -23,4 +23,4 @@ This will start the server on the port specified in the file. Default is 8001. T
 
 #### API References
 `/api/historicaldata?date=&source=&sensor=&feature=` - Returns all the data for the given parameters.\
-`/api/latestdata?source=&sensor=&feature=` - Returns the latest data for the given sensor and feature.\
+`/api/latestdata?source=&sensor=&feature=` - Returns the latest data for the given sensor and feature. If feature is not specified then returns the complete set of feature data.\
