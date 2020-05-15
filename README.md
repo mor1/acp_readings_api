@@ -22,5 +22,7 @@ python acp_readings_api.py
 This will start the server on the port specified in the file. Default is 8001. The API endpoints could be accessed by querying *http://localhost:8001/endpoint*
 
 #### API References
-`/api/historicaldata?date=&source=&sensor=&feature=` - Returns all the data for the given parameters.\
-`/api/latestdata?source=&sensor=&feature=` - Returns the latest data for the given sensor and feature. If feature is not specified then returns the complete set of feature data.\
+1. `/api/historicaldata?date=&source=&sensor=&feature=` - Returns all the data for the given parameters.\
+2. `/api/latestdata?source=&sensor=&feature=` - Returns the latest data for the given sensor and feature. If feature is not specified then returns the complete set of feature data. Sample Output:
+    + `/api/latestdata?source=mqtt_ttn&sensor=elsys-co2-0461e3`: {"features": {"co2": 415, "device": "elsys_co2", "humidity": 36, "light": 0, "motion": 2, "temperature": 15.3, "vdd": 3659}}
+    + `/api/latestdata?source=mqtt_ttn&sensor=elsys-co2-0461e3&feature=co2`: {"co2": 415}
