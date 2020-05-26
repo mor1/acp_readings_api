@@ -41,7 +41,7 @@ def latest_data():
 
     response = {}
 
-    if feature == '':
+    if feature == '' or feature == None:
         response = {'features':jsonData['payload_fields']}
     else:
         response = {feature:jsonData['payload_fields'][feature]}
