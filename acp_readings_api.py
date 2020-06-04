@@ -27,7 +27,7 @@ def getDateToday():
     dt = datetime.now()
     return dt.strftime("%Y-%m-%d")
     
-@app.route('/api/latestdata')
+@app.route('/api/readings/latestdata')
 def latest_data():
     source = request.args.get('source')
     sensor = request.args.get('sensor')
@@ -49,7 +49,7 @@ def latest_data():
     json_response = json.dumps(response)
     return(json_response)
 
-@app.route('/api/historicaldata')
+@app.route('/api/readings/historicaldata')
 def history_data():
     if DEBUG:
         print('Requested')
